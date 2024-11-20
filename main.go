@@ -2,17 +2,35 @@ package main
 
 import (
 	"codly/datastore"
+	"codly/model"
 	"codly/router"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"gopkg.in/yaml.v3"
+	"os"
 )
 
 func main() {
-	db, err := datastore.InitDB()
+	config := model.Config{}
+	fileBytes, err := os.ReadFile("./config.yaml")
+	if err != nil {
+		return
+	}
+	err = yaml.Unmarshal(fileBytes, &config)
+	if err != nil {
+		return
+	}
+	db, err := datastore.InitDB(config.Database)
 	if err != nil {
 		return
 	}
 	var r = router.InitRouter(db)
-	err2 := r.Run()
-	if err2 != nil {
+	logFile, err := os.Create("./logs/codly.log")
+	if err != nil {
 		return
-	} // 监听并在 0.0.0.0:8080 上启动服务
+	}
+	gin.DefaultWriter = logFile
+	r.Use(gin.Logger())
+	fmt.Println("Codly is running on port: ", config.App.Port)
+	_ = r.Run(fmt.Sprintf(":%d", config.App.Port))
 }

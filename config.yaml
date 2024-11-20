@@ -1,0 +1,9 @@
+app:
+  name: "My App"
+  port: 8080
+database:
+  host: "192.168.2.10"
+  port: 3306
+  username: "codly_test"
+  password: "123456"
+  database: "codly_test_db"
