@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
 	"os"
+	"time"
 )
 
 func main() {
@@ -24,6 +25,19 @@ func main() {
 	if err != nil {
 		return
 	}
+	sqlDB, err := db.DB()
+	if err != nil {
+		return
+	}
+	// SetMaxIdleConns 设置空闲连接池中的最大连接数。
+	sqlDB.SetMaxIdleConns(10)
+
+	//// SetMaxOpenConns 设置数据库的最大打开连接数
+	sqlDB.SetMaxOpenConns(100)
+
+	// SetConnMaxLifetime 设置连接的最大重用时间
+	sqlDB.SetConnMaxLifetime(time.Hour)
+
 	var r = router.InitRouter(db)
 	logFile, err := os.Create("./logs/codly.log")
 	if err != nil {

@@ -6,4 +6,4 @@ database:
   port: 3306
   username: "codly_test"
   password: "123456"
-  database: "codly_test_db"
+  db_name: "codly_test_db"
