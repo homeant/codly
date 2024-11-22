@@ -1,14 +1,12 @@
 package router
 
 import (
-	"codly/handlers"
+	"codly/api"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func InitRouter(db *gorm.DB) *gin.Engine {
-	var router = gin.Default()
-	router.GET("/app", handlers.AppHandler(db))
-	router.PUT("/admin-user", handlers.CreateAdminUserHandler(db))
-	return router
+func Init() *gin.Engine {
+	r := gin.New()
+	r.GET("/app", api.Login)
+	return r
 }

@@ -1,18 +1,26 @@
 package service
 
 import (
+	"codly/datastore"
 	"codly/model"
-	"gorm.io/gorm"
 )
 
-type AdminUserService struct {
-	db *gorm.DB
+type AdminUserInterface interface {
+	CreateAdminUser(adminUser *model.AdminUser) (data *model.AdminUser, err error)
+	GetAdminUser(username string) (data model.AdminUser, err error)
 }
 
-func NewAdminUserService(db *gorm.DB) *AdminUserService {
-	return &AdminUserService{db: db}
+type adminUserService struct {
 }
 
-func (service *AdminUserService) CreateAdminUser(adminUser model.AdminUser) {
-	service.db.Create(&adminUser)
+var AdminUserService AdminUserInterface = &adminUserService{}
+
+func (service *adminUserService) CreateAdminUser(adminUser *model.AdminUser) (data *model.AdminUser, err error) {
+	data, err = model.AdminUserDatastore.Create(datastore.Datastore.DB(), adminUser)
+	return
+}
+
+func (service *adminUserService) GetAdminUser(username string) (data model.AdminUser, err error) {
+	data, err = model.AdminUserDatastore.FetchOne("username=?", username)
+	return
 }
