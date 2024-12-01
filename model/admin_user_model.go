@@ -1,21 +1,33 @@
 package model
 
 import (
-	"codly/datastore"
+	"github.com/homeanter/codly/datastore"
 	"gorm.io/gorm"
 )
 
 type AdminUser struct {
 	ID       uint   `gorm:"primaryKey;autoIncrement;comment:主键ID" json:"id"`
+	NickName string `gorm:"comment:昵称" json:"nick_name"`
 	Username string `gorm:"unique;comment:用户名" json:"username"`
 	Password string `gorm:"comment:密码" json:"password"`
+}
+
+type AdminUserRegister struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	NickName string `json:"nick_name"`
+}
+
+type AdminUserLogin struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type AdminUserInterface interface {
 	Create(tx *gorm.DB, data *AdminUser) (user *AdminUser, err error)
 	Update(tx *gorm.DB, id uint, data map[string]interface{}) (rowsAffected int64, err error)
 	Delete(tx *gorm.DB, data []int) (rowsAffected int64, err error)
-	FetchOne(query interface{}, args ...interface{}) (record AdminUser, err error)
+	FetchOne(query interface{}, args ...interface{}) (record *AdminUser, err error)
 }
 
 type store struct {
@@ -44,7 +56,7 @@ func (u store) Delete(tx *gorm.DB, data []int) (rowsAffected int64, err error) {
 	panic("implement me")
 }
 
-func (u store) FetchOne(query interface{}, args ...interface{}) (record AdminUser, err error) {
+func (u store) FetchOne(query interface{}, args ...interface{}) (record *AdminUser, err error) {
 	db := u.tx.Where(query, args...).First(&record)
 	if err = db.Error; db.Error != nil {
 		return

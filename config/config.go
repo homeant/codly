@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
 )
@@ -11,29 +12,33 @@ type app struct {
 }
 
 type databaseConfig struct {
-	DriverType string `json:"driver_type"`
-	Host       string `json:"host"`
-	Port       int    `json:"port"`
+	DriverType string `yaml:"driver_type"`
+	Host       string `yaml:"host"`
+	Port       int    `yaml:"port"`
 	DBName     string `yaml:"db_name"`
-	Username   string `json:"username"`
-	Password   string `json:"password"`
+	Username   string `yaml:"username"`
+	Password   string `yaml:"password"`
 }
 
 type config struct {
-	App      app            `json:"app"`
-	Database databaseConfig `json:"database"`
+	App            app            `yaml:"app"`
+	Database       databaseConfig `yaml:"database"`
+	BcryptPassword string         `yaml:"bcrypt_password"`
+	JwtSecretKey   string         `yaml:"jwt_secret_key"`
 }
+
+var Config *config
 
 var App *app
 
 var Database *databaseConfig
 
 func init() {
+	fmt.Printf("Loading config file")
 	fileBytes, err := os.ReadFile("./config.yaml")
 	if err != nil {
 		return
 	}
-	Config := config{}
 	err = yaml.Unmarshal(fileBytes, &Config)
 	if err != nil {
 		return

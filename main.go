@@ -1,18 +1,24 @@
 package main
 
 import (
-	"codly/config"
-	"codly/router"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/homeanter/codly/config"
+	"github.com/homeanter/codly/router"
+	"github.com/homeanter/codly/utils"
 	"os"
 )
 
 func main() {
-
 	var r = router.Init()
-	logFile, err := os.Create("./logs/codly.log")
+	logFilePath := "./logs/codly.log"
+	err := utils.CreateDir(logFilePath)
 	if err != nil {
+		fmt.Println(err.Error())
+	}
+	logFile, err := os.Create(logFilePath)
+	if err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 	gin.DefaultWriter = logFile
