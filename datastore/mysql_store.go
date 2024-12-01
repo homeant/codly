@@ -1,8 +1,8 @@
 package datastore
 
 import (
+	"codly/config"
 	"fmt"
-	"github.com/homeanter/codly/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"

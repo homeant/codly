@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/homeanter/codly/datastore"
+	"codly/datastore"
 	"gorm.io/gorm"
 )
 

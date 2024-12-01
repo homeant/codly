@@ -1,11 +1,11 @@
 package service
 
 import (
+	"codly/config"
+	"codly/datastore"
+	"codly/model"
+	"codly/utils"
 	"errors"
-	"github.com/homeanter/codly/config"
-	"github.com/homeanter/codly/datastore"
-	"github.com/homeanter/codly/model"
-	"github.com/homeanter/codly/utils"
 )
 
 type AdminUserInterface interface {

@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"codly/config"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/homeanter/codly/config"
 	"strings"
 )
 

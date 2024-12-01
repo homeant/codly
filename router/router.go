@@ -1,13 +1,12 @@
 package router
 
 import (
+	"codly/api"
+	"codly/middleware"
 	"github.com/gin-gonic/gin"
-	"github.com/homeanter/codly/api"
-	"github.com/homeanter/codly/middleware"
 )
 
-func New() *gin.Engine {
-	r := gin.Default()
+func Init(r *gin.Engine) {
 	r.POST("/api/login", api.Login)
 	r.POST("/api/register", api.Register)
 
@@ -19,5 +18,4 @@ func New() *gin.Engine {
 			"message": "pong",
 		})
 	})
-	return r
 }

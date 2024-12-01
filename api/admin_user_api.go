@@ -1,9 +1,9 @@
 package api
 
 import (
+	"codly/model"
+	"codly/service"
 	"github.com/gin-gonic/gin"
-	"github.com/homeanter/codly/model"
-	"github.com/homeanter/codly/service"
 )
 
 func Register(c *gin.Context) {

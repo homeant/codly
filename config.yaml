@@ -1,5 +1,5 @@
 app:
-  name: "My App"
+  name: Codly
   port: 8080
 database:
   host: "192.168.2.10"

@@ -1,8 +1,8 @@
 package utils
 
 import (
+	"codly/config"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/homeanter/codly/config"
 	"time"
 )
 
