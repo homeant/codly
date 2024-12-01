@@ -5,9 +5,7 @@ import (
 	"github.com/homeanter/codly/api"
 )
 
-func Init() *gin.Engine {
-	r := gin.New()
+func Init(r *gin.Engine) {
 	r.POST("/login", api.Login)
 	r.POST("/register", api.Register)
-	return r
 }
